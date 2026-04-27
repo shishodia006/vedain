@@ -18,20 +18,24 @@ app.post("/lead", async (req, res) => {
     const formData = req.body;
     console.log("Lead received:", formData);
 
-    const body = {
+const body = {
+  firstName: formData.name?.split(" ")[0] || "",
+  lastName: formData.name?.split(" ")[1] || "",
+  email: formData.email,
+  phone: formData.phone,
 
-      firstName: formData.name.split(" ")[0] || formData.name,
-      lastName: formData.name.split(" ")[1] || "", // split name for lastName
-      email: formData.email,
-      phone: formData.phone,
-      message: formData.message,
-      source: "Website Form",
-      leadStatus: "New",
-      stage: "New",
-      ownerId: "b248048c-853b-4915-9178-dbb9ac035cdd",
-      company: formData.company || "Anantya AI" // set default company
-    };
+  message: `
+Website: ${formData.website || "N/A"}
+Slot: ${formData.slot || "N/A"}
+Page: ${formData.sourcePage || "N/A"}
+`,
+  source: formData.sourcePage || "Website",
 
+  leadStatus: "New",
+  stage: "New",
+  ownerId: "b248048c-853b-4915-9178-dbb9ac035cdd",
+  company: formData.website || "Anantya AI"
+};
 
     console.log("Lead received:", body);
 
